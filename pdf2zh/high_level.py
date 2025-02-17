@@ -379,7 +379,7 @@ def translate(
     return result_files
 
 
-def download_remote_fonts(lang: str):
+""" def download_remote_fonts(lang: str):
     URL_PREFIX = "https://gh-proxy.com/github.com/timelic/source-han-serif/releases/download/main/"
     LANG_NAME_MAP = {
         **{la: "GoNotoKurrent-Regular.ttf" for la in noto_list},
@@ -404,4 +404,4 @@ def download_remote_fonts(lang: str):
         print(f"Downloading {font_name}...")
         urllib.request.urlretrieve(f"{URL_PREFIX}{font_name}", font_path)
 
-    return font_path
+    return font_path """
