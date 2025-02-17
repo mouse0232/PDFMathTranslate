@@ -402,6 +402,8 @@ def download_remote_fonts(lang: str):
         font_path = Path(tempfile.gettempdir(), font_name).as_posix()
     if not Path(font_path).exists():
         print(f"Downloading {font_name}...")
+        import ssl
+        context = ssl._create_unverified_context()
         urllib.request.urlretrieve(f"{URL_PREFIX}{font_name}", font_path)
 
     return font_path
