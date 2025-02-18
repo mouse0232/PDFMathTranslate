@@ -402,12 +402,11 @@ def download_remote_fonts(lang: str):
         font_path = Path(tempfile.gettempdir(), font_name).as_posix()
     if not Path(font_path).exists():
         print(f"Downloading {font_name}...")
-        # Create SSL context that ignores certificate verification
         ssl_context = ssl._create_unverified_context()
-        urllib.request.urlretrieve(
-            f"{URL_PREFIX}{font_name}", 
-            font_path,
-            context=ssl_context
-        )
+        url = f"{URL_PREFIX}{font_name}"
+        
+        with urllib.request.urlopen(url, context=ssl_context) as response:
+            with open(font_path, 'wb') as out_file:
+                out_file.write(response.read())
 
     return font_path
