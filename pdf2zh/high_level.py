@@ -403,10 +403,8 @@ def download_remote_fonts(lang: str):
         font_path = Path(tempfile.gettempdir(), font_name).as_posix()
     if not Path(font_path).exists():
         print(f"Downloading {font_name}...")
-        # 创建一个未经验证的SSL上下文
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        urllib.request.urlretrieve(f"{URL_PREFIX}{font_name}", font_path, context=ctx)
+        ssl._create_default_https_context = ssl._create_unverified_context
+        urllib.request.urlretrieve(f"{URL_PREFIX}{font_name}", font_path)
+        ssl._create_default_https_context = ssl.create_default_context
 
     return font_path
