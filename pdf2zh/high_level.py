@@ -5,6 +5,7 @@ import io
 import os
 import re
 import sys
+import ssl
 import tempfile
 import urllib.request
 from asyncio import CancelledError
@@ -379,8 +380,8 @@ def translate(
     return result_files
 
 
-""" def download_remote_fonts(lang: str):
-    URL_PREFIX = "https://gh-proxy.com/github.com/timelic/source-han-serif/releases/download/main/"
+def download_remote_fonts(lang: str):
+    URL_PREFIX = "https://github.com/timelic/source-han-serif/releases/download/main/"
     LANG_NAME_MAP = {
         **{la: "GoNotoKurrent-Regular.ttf" for la in noto_list},
         **{
@@ -402,6 +403,10 @@ def translate(
         font_path = Path(tempfile.gettempdir(), font_name).as_posix()
     if not Path(font_path).exists():
         print(f"Downloading {font_name}...")
-        urllib.request.urlretrieve(f"{URL_PREFIX}{font_name}", font_path)
+        # 创建一个未经验证的SSL上下文
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        urllib.request.urlretrieve(f"{URL_PREFIX}{font_name}", font_path, context=ctx)
 
-    return font_path """
+    return font_path
