@@ -379,7 +379,6 @@ def translate(
 
     return result_files
 
-
 def download_remote_fonts(lang: str):
     URL_PREFIX = "https://ghfast.top/https://github.com/timelic/source-han-serif/releases/download/main/"
     LANG_NAME_MAP = {
@@ -403,8 +402,12 @@ def download_remote_fonts(lang: str):
         font_path = Path(tempfile.gettempdir(), font_name).as_posix()
     if not Path(font_path).exists():
         print(f"Downloading {font_name}...")
-        # ssl._create_default_https_context = ssl._create_unverified_context
-        urllib.request.urlretrieve(f"{URL_PREFIX}{font_name}", font_path)
-        # ssl._create_default_https_context = ssl.create_default_context
+        # Create SSL context that ignores certificate verification
+        ssl_context = ssl._create_unverified_context()
+        urllib.request.urlretrieve(
+            f"{URL_PREFIX}{font_name}", 
+            font_path,
+            context=ssl_context
+        )
 
     return font_path
