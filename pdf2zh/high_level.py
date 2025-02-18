@@ -381,7 +381,7 @@ def translate(
 
 
 def download_remote_fonts(lang: str):
-    URL_PREFIX = "https://github.com/timelic/source-han-serif/releases/download/main/"
+    URL_PREFIX = "https://ghfast.top/https://github.com/timelic/source-han-serif/releases/download/main/"
     LANG_NAME_MAP = {
         **{la: "GoNotoKurrent-Regular.ttf" for la in noto_list},
         **{
